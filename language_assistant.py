@@ -3,8 +3,8 @@ import json
 import os
 from getpass import getpass
 
-def call_openai_api(api_key, user_text, language):
-    """Call the OpenAI API to correct grammar and provide feedback."""
+def call_api(api_key, user_text, language, api_provider="openai"):
+    """Call the API to correct grammar and provide feedback."""
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"
@@ -27,8 +27,14 @@ Explanation: [explanation of mistakes]"""
         "max_tokens": 500
     }
     
+    # Select the appropriate API endpoint
+    if api_provider.lower() == "chatzal":
+        api_url = "https://api.chatzal.com/v1/chat/completions"
+    else:  # Default to OpenAI
+        api_url = "https://api.openai.com/v1/chat/completions"
+    
     response = requests.post(
-        "https://api.openai.com/v1/chat/completions",
+        api_url,
         headers=headers,
         data=json.dumps(payload)
     )
@@ -43,6 +49,21 @@ def main():
     print("Welcome to the Language Learning Assistant!")
     print("=" * 50)
     print("\nThis program will help you learn a new language by correcting your grammar.")
+    
+    # Select API provider
+    print("\nSelect API provider:")
+    print("1. OpenAI (default)")
+    print("2. Chatzal (for users in Iran)")
+    
+    api_provider = "openai"  # Default
+    try:
+        provider_choice = int(input("\nSelect provider (number): "))
+        if provider_choice == 2:
+            api_provider = "chatzal"
+    except ValueError:
+        print("Invalid input. Defaulting to OpenAI.")
+    
+    print(f"\nUsing {api_provider.upper()} API.")
     
     # Get the language the user wants to learn
     languages = ["Spanish", "French", "German", "Italian", "Portuguese", "Russian", "Japanese", "Chinese", "Korean"]
@@ -65,14 +86,14 @@ def main():
         except ValueError:
             print("Please enter a valid number.")
     
-    # Get the OpenAI API key
-    api_key = os.environ.get("OPENAI_API_KEY")
+    # Get the API key
+    api_key = os.environ.get("OPENAI_API_KEY") if api_provider == "openai" else os.environ.get("CHATZAL_API_KEY")
     if not api_key:
-        print("\nPlease provide your OpenAI API key.")
-        api_key = getpass("OpenAI API Key (input will be hidden): ")
+        print(f"\nPlease provide your {api_provider.upper()} API key.")
+        api_key = getpass("API Key (input will be hidden): ")
     
     print(f"\nGreat! You're now learning {language}.")
-    print("Type your text in {language}, and I'll correct it for you.")
+    print(f"Type your text in {language}, and I'll correct it for you.")
     print("Type 'exit' to quit.")
     
     while True:
@@ -87,7 +108,7 @@ def main():
             continue
         
         print("\nAnalyzing your text...")
-        response = call_openai_api(api_key, user_text, language)
+        response = call_api(api_key, user_text, language, api_provider)
         print("\n" + response)
 
 if __name__ == "__main__":
