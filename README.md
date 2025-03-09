@@ -23,16 +23,45 @@ A Python-based tool that helps users learn a new language by correcting grammar 
    cd language-learning-assistant
    ```
 
-2. Install required dependencies:
+2. Set up a virtual environment:
+   
+   **Windows:**
+   ```
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+   
+   **macOS/Linux:**
+   ```
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+   
+   You should see `(venv)` in your terminal prompt indicating the virtual environment is active.
+
+3. Install required dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-3. Set up your OpenAI API key:
+4. Set up your OpenAI API key:
    - Option 1: Set as an environment variable:
+     
+     **Windows (Command Prompt):**
+     ```
+     set OPENAI_API_KEY=your-api-key-here
+     ```
+     
+     **Windows (PowerShell):**
+     ```
+     $env:OPENAI_API_KEY="your-api-key-here"
+     ```
+     
+     **macOS/Linux:**
      ```
      export OPENAI_API_KEY=your-api-key-here
      ```
+   
    - Option 2: Enter it when prompted by the program
 
 ## Usage
