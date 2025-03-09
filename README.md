@@ -8,6 +8,7 @@ A Python-based tool that helps users learn a new language by correcting grammar 
 - Provides grammar correction and explanations of mistakes
 - Simple command-line interface
 - Secure API key handling
+- Specialized German learning tool available
 
 ## Requirements
 
@@ -66,15 +67,27 @@ A Python-based tool that helps users learn a new language by correcting grammar 
 
 ## Usage
 
+### General Language Assistant
+
 Run the program:
 ```
 python language_assistant.py
 ```
 
-1. Select the language you want to learn from the menu
-2. Enter text in your target language
-3. Receive corrections and explanations
-4. Type 'exit' to quit the program
+1. Select API provider (OpenAI or Chatzal for users in Iran)
+2. Select the language you want to learn from the menu
+3. Enter text in your target language
+4. Receive corrections and explanations
+5. Type 'exit' to quit the program
+
+### German-Specific Learning Tool
+
+For focused German language learning, use the specialized German tool:
+```
+python german_learner.py
+```
+
+This simplified tool is specifically designed for German language learning, with a streamlined interface.
 
 ### For Users in Iran
 
@@ -82,7 +95,7 @@ If you are in Iran and cannot access OpenAI services directly, you can use the [
 
 To use Chatzal:
 1. Register at https://platform.chatzal.com/ to get an API key
-2. Modify the API endpoint in the code to: "https://api.chatzal.com/v1/chat/completions"
+2. Select Chatzal as your API provider when prompted in the main language assistant program
 
 ## Example Session
 
